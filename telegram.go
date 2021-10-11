@@ -77,3 +77,7 @@ func DownloadStat(fileId int32) (*client.File, error) {
 		FileId: fileId,
 	})
 }
+
+func GetListener() *client.Listener {
+	return c.GetListener()
+}
