@@ -8,19 +8,25 @@ import (
 
 var c *client.Client
 
-func Init(apiId int32, apiHash string) {
+type Config struct {
+	ApiId      int32
+	ApiHash    string
+	DataFolder string
+}
+
+func Init(self *Config) {
 	authorizer := client.ClientAuthorizer()
 	go client.CliInteractor(authorizer)
 	authorizer.TdlibParameters <- &client.TdlibParameters{
 		UseTestDc:              false,
-		DatabaseDirectory:      filepath.Join(".tdlib", "database"),
-		FilesDirectory:         filepath.Join(".tdlib", "files"),
+		DatabaseDirectory:      filepath.Join(self.DataFolder, ".tdlib", "database"),
+		FilesDirectory:         filepath.Join(self.DataFolder, ".tdlib", "files"),
 		UseFileDatabase:        true,
 		UseChatInfoDatabase:    true,
 		UseMessageDatabase:     true,
 		UseSecretChats:         false,
-		ApiId:                  apiId,
-		ApiHash:                apiHash,
+		ApiId:                  self.ApiId,
+		ApiHash:                self.ApiHash,
 		SystemLanguageCode:     "en",
 		DeviceModel:            "Server",
 		SystemVersion:          "1.0.0",
