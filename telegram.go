@@ -21,7 +21,7 @@ func Init(self *Config) {
 		UseTestDc:              false,
 		DatabaseDirectory:      filepath.Join(self.DataFolder, ".tdlib", "database"),
 		FilesDirectory:         filepath.Join(self.DataFolder, ".tdlib", "files"),
-		UseFileDatabase:        true,
+		UseFileDatabase:        false,
 		UseChatInfoDatabase:    true,
 		UseMessageDatabase:     true,
 		UseSecretChats:         false,
