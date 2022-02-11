@@ -71,11 +71,11 @@ func SplitVideoMessage(msg *client.Message) (text string, fileId int32, ok bool)
 	return
 }
 
-func DownloadFile(fileId int32) (*client.File, error) {
+func DownloadFile(fileId int32, sync bool) (*client.File, error) {
 	return c.DownloadFile(&client.DownloadFileRequest{
 		FileId:      fileId,
 		Priority:    32,
-		Synchronous: true,
+		Synchronous: sync,
 	})
 }
 
