@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 )
 
-var c *client.Client
+var Client *client.Client
 
 type Config struct {
 	ApiId      int32
@@ -35,7 +35,7 @@ func Init(self *Config) {
 		IgnoreFileNames:        false,
 	}
 	var err error
-	c, err = client.NewClient(authorizer, client.WithLogVerbosity(&client.SetLogVerbosityLevelRequest{
+	Client, err = client.NewClient(authorizer, client.WithLogVerbosity(&client.SetLogVerbosityLevelRequest{
 		NewVerbosityLevel: 0,
 	}))
 	if err != nil {
@@ -44,7 +44,7 @@ func Init(self *Config) {
 }
 
 func GetHistory(chatId int64, FromMsgId int64, limit int32) (*client.Messages, error) {
-	return c.GetChatHistory(&client.GetChatHistoryRequest{
+	return Client.GetChatHistory(&client.GetChatHistoryRequest{
 		ChatId:        chatId,
 		FromMessageId: FromMsgId,
 		Limit:         limit,
@@ -52,7 +52,7 @@ func GetHistory(chatId int64, FromMsgId int64, limit int32) (*client.Messages, e
 }
 
 func GetMsg(chatId int64, id int64) (*client.Message, error) {
-	return c.GetMessage(&client.GetMessageRequest{
+	return Client.GetMessage(&client.GetMessageRequest{
 		ChatId:    chatId,
 		MessageId: id,
 	})
@@ -72,7 +72,7 @@ func SplitVideoMessage(msg *client.Message) (text string, fileId int32, ok bool)
 }
 
 func DownloadFile(fileId int32, sync bool) (*client.File, error) {
-	return c.DownloadFile(&client.DownloadFileRequest{
+	return Client.DownloadFile(&client.DownloadFileRequest{
 		FileId:      fileId,
 		Priority:    32,
 		Synchronous: sync,
@@ -80,11 +80,11 @@ func DownloadFile(fileId int32, sync bool) (*client.File, error) {
 }
 
 func DownloadStat(fileId int32) (*client.File, error) {
-	return c.GetFile(&client.GetFileRequest{
+	return Client.GetFile(&client.GetFileRequest{
 		FileId: fileId,
 	})
 }
 
 func GetListener() *client.Listener {
-	return c.GetListener()
+	return Client.GetListener()
 }
