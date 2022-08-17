@@ -14,7 +14,7 @@ type Config struct {
 	DataFolder string
 }
 
-func Init(self *Config) {
+func Init(self *Config, opts ...client.Option) {
 	authorizer := client.ClientAuthorizer()
 	go client.CliInteractor(authorizer)
 	authorizer.TdlibParameters <- &client.TdlibParameters{
@@ -35,9 +35,9 @@ func Init(self *Config) {
 		IgnoreFileNames:        false,
 	}
 	var err error
-	Client, err = client.NewClient(authorizer, client.WithLogVerbosity(&client.SetLogVerbosityLevelRequest{
+	Client, err = client.NewClient(authorizer, append(opts, client.WithLogVerbosity(&client.SetLogVerbosityLevelRequest{
 		NewVerbosityLevel: 0,
-	}))
+	}))...)
 	if err != nil {
 		log.Fatalf("NewClient error: %s", err)
 	}
