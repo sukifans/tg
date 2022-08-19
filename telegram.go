@@ -29,15 +29,12 @@ func Init(self *Config, opts ...client.Option) {
 		ApiHash:                self.ApiHash,
 		SystemLanguageCode:     "en",
 		DeviceModel:            "Server",
-		SystemVersion:          "1.0.0",
 		ApplicationVersion:     "1.0.0",
 		EnableStorageOptimizer: true,
 		IgnoreFileNames:        false,
 	}
 	var err error
-	Client, err = client.NewClient(authorizer, append(opts, client.WithLogVerbosity(&client.SetLogVerbosityLevelRequest{
-		NewVerbosityLevel: 0,
-	}))...)
+	Client, err = client.NewClient(authorizer, opts...)
 	if err != nil {
 		log.Fatalf("NewClient error: %s", err)
 	}
