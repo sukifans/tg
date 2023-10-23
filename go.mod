@@ -1,5 +1,5 @@
 module github.com/sukifans/tg
 
-go 1.19
+go 1.21.2
 
-require github.com/zelenin/go-tdlib v0.6.0
+require github.com/zelenin/go-tdlib v0.7.0
