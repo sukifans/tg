@@ -18,20 +18,18 @@ func Init(self *Config, opts ...client.Option) {
 	authorizer := client.ClientAuthorizer()
 	go client.CliInteractor(authorizer)
 	authorizer.TdlibParameters <- &client.SetTdlibParametersRequest{
-		UseTestDc:              false,
-		DatabaseDirectory:      filepath.Join(self.DataFolder, ".tdlib", "database"),
-		FilesDirectory:         filepath.Join(self.DataFolder, ".tdlib", "files"),
-		UseFileDatabase:        false,
-		UseChatInfoDatabase:    true,
-		UseMessageDatabase:     true,
-		UseSecretChats:         false,
-		ApiId:                  self.ApiId,
-		ApiHash:                self.ApiHash,
-		SystemLanguageCode:     "en",
-		DeviceModel:            "Server",
-		ApplicationVersion:     "1.0.0",
-		EnableStorageOptimizer: true,
-		IgnoreFileNames:        false,
+		UseTestDc:           false,
+		DatabaseDirectory:   filepath.Join(self.DataFolder, ".tdlib", "database"),
+		FilesDirectory:      filepath.Join(self.DataFolder, ".tdlib", "files"),
+		UseFileDatabase:     false,
+		UseChatInfoDatabase: true,
+		UseMessageDatabase:  true,
+		UseSecretChats:      false,
+		ApiId:               self.ApiId,
+		ApiHash:             self.ApiHash,
+		SystemLanguageCode:  "en",
+		DeviceModel:         "Server",
+		ApplicationVersion:  "1.0.0",
 	}
 	var err error
 	Client, err = client.NewClient(authorizer, opts...)
