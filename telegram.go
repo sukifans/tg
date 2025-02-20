@@ -15,9 +15,7 @@ type Config struct {
 }
 
 func Init(self *Config, opts ...client.Option) {
-	authorizer := client.ClientAuthorizer()
-	go client.CliInteractor(authorizer)
-	authorizer.TdlibParameters <- &client.SetTdlibParametersRequest{
+	authorizer := client.ClientAuthorizer(&client.SetTdlibParametersRequest{
 		UseTestDc:           false,
 		DatabaseDirectory:   filepath.Join(self.DataFolder, ".tdlib", "database"),
 		FilesDirectory:      filepath.Join(self.DataFolder, ".tdlib", "files"),
@@ -30,7 +28,8 @@ func Init(self *Config, opts ...client.Option) {
 		SystemLanguageCode:  "en",
 		DeviceModel:         "Server",
 		ApplicationVersion:  "1.0.0",
-	}
+	})
+	go client.CliInteractor(authorizer)
 	var err error
 	Client, err = client.NewClient(authorizer, opts...)
 	if err != nil {
